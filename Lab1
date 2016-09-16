@@ -59,6 +59,4 @@ Data bios500.exposure2; /*creates a permanent dataset*/
 	set bios500.exposure; /*we are setting our original dataset*/
 	BMI=weight*703/height**2 /* "*" is multiply "**" is to a power*/
 	
-Type NUMS in searchbar to bring up line numbers
-
-
+*Type NUMS in searchbar to bring up line numbers;
