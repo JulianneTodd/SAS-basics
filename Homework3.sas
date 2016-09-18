@@ -28,7 +28,7 @@ PROC MEANS data=hw3.Physical_activity2013 maxdec=0 mean median;
 RUN;
 
 *Q10;
-*Run univariate and look at skewness;
+*Run univariate and look at skewness to determine whether distribution is normal;
 PROC UNIVARIATE data=hw3.Physical_activity2013;
     var modtot;
 RUN;
@@ -48,21 +48,22 @@ RUN;
 
 *Question 13-14;
 *Requesting the frequency of each response for the "enough exercise" variable for people who did meet CDC guidelines;
+*Don't need row or total percentage values;
 PROC FREQ data=hw3.Physical_activity2013;
-    tables enough_exercise*CDC_enough / missing nocol;
+    tables enough_exercise*CDC_enough / missing norow nopercent;
 RUN;
 
 *Question 15;
 *Requesting the frequency of each response for the "enough exercise" variable for people who did not follow CDC guidelines;
 PROC FREQ data=hw3.Physical_activity2013;
-    tables enough_exercise*CDC_enough / missing;
-    where CDC_enough=0;
+    tables enough_exercise*CDC_enough / nofreq nopercent nocol missing;
+    where enough_exercise="As much as needed";
 RUN;
 
 *Question 16;
 *Requesting the frequency of each response for the "CDC enough" variable;
 PROC FREQ data=hw3.Physical_activity2013;
-    tables enough_exercise*CDC_enough / missing nocol norow nofreq;
+    tables enough_exercise*CDC_enough / missing nofreq;
 RUN;
 
 *Question 17;
@@ -82,6 +83,6 @@ the “I get enough exercise” categories (enough_exercise);
 
 PROC UNIVARIATE DATA=hw3.Physical_activity2013;
     VAR allexer;
-    CLASS enough exercise;
+    CLASS enough_exercise;
     HISTOGRAM allexer;
 RUN;
