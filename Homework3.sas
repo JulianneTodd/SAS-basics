@@ -66,12 +66,22 @@ PROC FREQ data=hw3.Physical_activity2013;
 RUN;
 
 *Question 17;
-*Make a plot that shows the relationship between total number of minutes/week of moderate
-exercise (modtot) and total number of minutes/week of strenuous exercise (strentot). Distinguish
-between those following the CDC guidelines (“compliers”, CDC_enough=1) and those not following
-the guidelines (non-compliers, (CDC_enough=0);
+*This graph shows the relationship between total number of minutes/week of moderate exercise (modtot) and total number of 
+minutes/week of strenuous exercise (strentot). Data is grouped based on whether the individual follows CDC recommended guidelines
+for exercise (CDC_enough=1) and those who do not meet guidelines (CDC_enough=0);
 
+PROC SGPLOT DATA=hw3.Physical_activity2013;
+    SCATTER Y=modtot X=strentot /GROUP=CDC_enough ;
+    XAXIS LABEL="number of minutes/week of strenuous exercise"; *add an axis label;
+    YAXIS LABEL="number of minutes/week of moderate exercise"; *add an axis label;
+RUN;
 
 *Question 18;
-*Make a plot that show the distribution of total minutes/week of moderate and strenuous exercise
-(allexer) by “I get enough exercise” categories (enough_exercise);
+*Graph will show the distribution of total minutes/week of moderate and strenuous exercise(allexer) grouped based on response to
+the “I get enough exercise” categories (enough_exercise);
+
+PROC UNIVARIATE DATA=hw3.Physical_activity2013;
+    VAR allexer;
+    CLASS enough exercise;
+    HISTOGRAM allexer;
+RUN;
