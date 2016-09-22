@@ -1,19 +1,34 @@
 LIBNAME hw4 'S:\course\BIOS500\WEISS\DATASETS';
 
 *Question 11;
-*Create a new variable, contact_total, that sums the contact_home and contact_work variables from the exposure dataset;
-*What is the mean of contact_total? (report to nearest tenth);
+*Created a new variable (contact_total) which sums contact home and work;
+DATA hw4.exposure2;
+	set hw4.exposure;
+	contact_total=contact_home+contact_work
+RUN; 
+*Determine the mean of contact_total to the tenth?;
+PROC MEANS data=hw4.exposure2;
+   var contact_total;
+RUN;
 
 *Question 12;
-*Using If/Then statements, create a categorical variable from BMI in the exposure dataset, using the following categories;
+*Created a categorical variable (BMI_designation) from BMI in the exposure dataset, using the following categories;
     *Underweight: less than 18.5;
     *Normal: >=18.5, less than 25;
     *Overweight: >=25, but less than 30;
     *Obese: 30 or higher;
-*How many subjects in the dataset are classified as “normal weight”?;
-
-*Question 13;
-*What percentage of subjects are classified as “obese”? (Report to nearest tenth);
+DATA hw4.exposure3;
+	set hw4.exposure2;
+	   if BMI=.			then BMI_designation='           ';
+   	else if BMI <18.5	then BMI_designation='underweight';
+	   else if BMI>=18.5 <25 	then BMI_designation='normal';
+	   else if BMI>=25  <30 	then BMI_designation='overweight';
+		else if BMI>30				then BMI_designation='obese'; *unnecessary, but worth just coding in for the homework;
+RUN;
+*PROC FREQ to determine number of subjects in the dataset are classified as “normal weight" and % of subs classified as "obese";
+PROC FREQ data=hw4.exposure3 maxdec=1;
+	tables BMI_designation/ LIST missing;
+RUN;
 
 *Question 14;
 *Create a format for the binary coding scheme 1=YES, 0=NO. Apply the format to two of the;
